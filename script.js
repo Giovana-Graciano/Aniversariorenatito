@@ -161,3 +161,40 @@ function cycleTrack(dir){
   startMusic(c);
   tone(dir>0?660:420,.07);
 }
+
+/* V12 RETRO MODULES */
+document.addEventListener("DOMContentLoaded",()=>{
+  const $=s=>document.querySelector(s);
+  const photoInput=$("#photoInput"), photoFrame=$("#photoFrame");
+  photoInput?.addEventListener("change",e=>{
+    const f=e.target.files?.[0]; if(!f)return;
+    const r=new FileReader(); r.onload=()=>{photoFrame.innerHTML="";const img=document.createElement("img");img.src=r.result;photoFrame.appendChild(img)};r.readAsDataURL(f);
+  });
+  $("#saveFloppy")?.addEventListener("click",()=>{
+    const payload={savedAt:new Date().toISOString(),site:"Renatinho Birthday Y2K Memory"};
+    const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
+    const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="RENATINHO_MEMORY.FLP";a.click();
+    $("#floppyStatus").textContent="MEMORY SAVED ✓";
+  });
+  $("#openCapsule")?.addEventListener("click",()=>{
+    $("#capsuleContent")?.classList.toggle("hidden");
+    const b=$("#openCapsule"); if(b)b.textContent=$("#capsuleContent")?.classList.contains("hidden")?"🔐 OPEN CAPSULE":"📂 CAPSULE OPENED";
+  });
+  $("#saveFuture")?.addEventListener("click",()=>{
+    const v=$("#futureMessage")?.value.trim(); if(!v)return;
+    localStorage.setItem("renatinho-future-message",v);
+    $("#futureStatus").textContent="SEALED ✓";
+    $("#futureMessage").disabled=true;
+    $("#saveFuture").textContent="🔒 SEALED";
+  });
+  const saved=localStorage.getItem("renatinho-future-message");
+  if(saved && $("#futureMessage")){$("#futureMessage").value=saved;$("#futureMessage").disabled=true;$("#futureStatus").textContent="SEALED ✓";$("#saveFuture").textContent="🔒 SEALED"}
+  $("#guestForm")?.addEventListener("submit",e=>{
+    e.preventDefault(); const n=$("#guestName")?.value.trim(),m=$("#guestMsg")?.value.trim(); if(!n||!m)return;
+    const box=document.createElement("div");box.className="guest-entry";box.innerHTML=`<b>★ ${esc(n)}</b><p>${esc(m)}</p><small>posted from Renatinho's internet</small>`;
+    $("#guestEntries")?.prepend(box);$("#guestName").value="";$("#guestMsg").value="";
+  });
+  $("#legacyPlay")?.addEventListener("click",()=>{try{tone(660,.08);tone(880,.08)}catch(e){};$("#legacyTrack").textContent="♫ NOW PLAYING — RENATINHO MIX"});
+  $("#legacyNext")?.addEventListener("click",()=>{$("#legacyTrack").textContent="♫ NEXT MEMORY TRACK";try{tone(880,.08)}catch(e){}});
+  $("#legacyPrev")?.addEventListener("click",()=>{$("#legacyTrack").textContent="♫ PREVIOUS MEMORY TRACK";try{tone(440,.08)}catch(e){}});
+});
