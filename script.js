@@ -123,7 +123,7 @@ const style=document.createElement("style");style.textContent="@keyframes cursor
 loadOpened();
 
 function updateFinal(){
-  const total=Math.min(cards.length,6);
+  const total=cards.length;
   const count=opened.size;
   const status=$("#finalStatus");
   const btn=$("#finalBtn");

@@ -12,3 +12,7 @@ Códigos atuais:
 - Admin: `RENATO-ADMIN-2026`
 
 A música de arquivo pode tocar no clique de abertura. YouTube/Spotify dependem das políticas de reprodução do provedor/navegador.
+
+
+## V11
+- Card Factory includes a SURPRISE ME button that randomizes Y2K themes, typography and message styling.
